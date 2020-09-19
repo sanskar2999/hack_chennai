@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <title>Title</title>
+</head>
+
+<body>
+<div class="conatiner-fluid">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+        <h1>Posture Detection !!!</h1>
+        <p>Estimate human bosy posture with high precision</p>
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-4 col-lg-4 text-center">
+            <h2>ML/AI Output</h2>
+            <!-- output from the ML model -->
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4 text-center">
+            <h2>Live Camera</h2>
+            <div class="video-wrap">
+                <video id="video" playsinline autoplay width="500" height="500"></video>
+            </div>
+            <div class="controller text-center">
+                <button id="snap" type="button" class="btn btn-warning text-center">capture</button>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4 text-center">
+            <h2>Snap</h2>
+            <canvas id="canvas" width="500" height="500"></canvas>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="text-center">
+        <h3>Please stand in front of CAMERA...</h3>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+            <h2>Acurracy(in %) : </h2>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+            <h2>NAME : </h2>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+            <h2>Other Details : </h2>
+        </div>
+    </div>
+</div>
+<script>
+    'use strict';
+
+    const video= document.getElementById('video');
+    const canvas= document.getElementById('canvas');
+    const snap= document.getElementById('snap');
+    const errorMsgelement= document.getElementById('spanErrorMsg');
+
+    const constraints={
+        audio:true,
+        video: {
+            width:500, height:500
+        }
+    };
+
+    async function init(){
+        try{
+            const stream= await navigator.mediaDevices.getUserMedia(constraints);
+            handleSuccess(stream);
+        }
+        catch(e){
+            errorMsgelement.innerHTML= `navigator.getUserMedia.error:${e.toString()}`;
+        }
+    }
+
+    function handleSuccess(stream){
+        window.stream=stream;
+        video.srcObject = stream;
+    }
+
+    init();
+
+    var context= canvas.getContext('2d');
+    snap.addEventListener("click", function(){
+        context.drawImage(video, 1, 1);
+    });
+
+</script>
+
+</body>
+
+</html>
