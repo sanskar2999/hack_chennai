@@ -18,8 +18,7 @@ logger.addHandler(ch)
 
 fps_time = 0
 
-
-if __name__ == '__main__':
+def start():
     parser = argparse.ArgumentParser(description='tf-pose-estimation realtime webcam')
     parser.add_argument('--camera', type=int, default=0)
     parser.add_argument('--zoom', type=float, default=1.0)
@@ -34,7 +33,7 @@ if __name__ == '__main__':
     w, h = model_wh(args.resolution)
     e = TfPoseEstimator(get_graph_path(args.model), target_size=(w, h))
     logger.debug('cam read+')
-    cam = cv2.VideoCapture(args.camera)
+    cam = cv2.VideoCapture("http://127.0.0.1:8000/")
     ret_val, image = cam.read()
     logger.info('cam image=%dx%d' % (image.shape[1], image.shape[0]))
     frame=0
@@ -85,12 +84,17 @@ if __name__ == '__main__':
                     (0, 255, 0), 2)
         cv2.putText(image, "persons = %f" % n,(10,30),cv2.FONT_HERSHEY_SIMPLEX, 0.5,
                     (0, 0, 255), 3)
-        cv2.imshow('orignal',image)
-        cv2.imshow('tf-pose-estimation result', image2)
+        # cv2.imshow('orignal',image)
+        # cv2.imshow('tf-pose-estimation result', image2)
         frame=frame+1
         fps_time = time.time()
         if cv2.waitKey(1) == 27:
             break
         logger.debug('finished+')
+        return image ,image2
 
     cv2.destroyAllWindows()
+
+
+if __name__ == '__main__':
+    start()
