@@ -27,4 +27,4 @@ def input_video(request):
 	run_webcam1.startt()
 
 	#execfile('run_webcam1')
-	return HttpResponse("hack chennai")						
+	return render(request, 'video.html')					
