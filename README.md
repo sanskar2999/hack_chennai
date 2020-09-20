@@ -8,7 +8,9 @@ You need dependencies below.
 
 - python3
 - tensorflow 1.4.1+
-- opencv3, protobuf, python3-tk
+- OpenCV, protobuf, python3-tk
+- Keras
+-Scikitlearn
 
 ## Models
 
