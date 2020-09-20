@@ -15,4 +15,10 @@ You need dependencies below.
 
 - cmu 
   - the model based VGG pretrained network which described in the original paper.
+    Download Weights:
+    http://www.mediafire.com/file/1pyjsjl0p93x27c/graph_freeze.pb 
+    http://www.mediafire.com/file/qlzzr20mpocnpa3/graph_opt.pb 
+    http://www.mediafire.com/file/i72ll9k5i7x6qfh/graph.pb 
+
 - Mobilenet_thin
+    
