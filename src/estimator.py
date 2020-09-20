@@ -7,7 +7,6 @@ import cv2
 import numpy as np
 import tensorflow as tf
 from scipy.ndimage import maximum_filter, gaussian_filter
-
 import common
 from common import CocoPairsNetwork, CocoPairs, CocoPart
 import json
@@ -295,6 +294,7 @@ class TfPoseEstimator:
         centers = {}
         body={}
         body["people"]=[]
+        #flat = [0.0 for i in range(36)]
         for n,human in enumerate(humans):
             flat = [0.0 for i in range(36)]
             # draw point
@@ -316,9 +316,10 @@ class TfPoseEstimator:
 
                 npimg = cv2.line(npimg, centers[pair[0]], centers[pair[1]], common.CocoColors[pair_order], 3)
             body["people"].append({"pose_keypoints_2d":flat})
-            if dir:
-                with open(os.path.join(dir,"{0}_keyp.json".format(str(frame))),'w') as file:
-                    json.dump(body,file)
+            #if dir:
+            with open(os.path.join(dir,"{0}_keyp.json".format(str(frame).zfill(12))),'w') as file:
+                json.dump(body,file)
+
         return npimg
 
     def _get_scaled_img(self, npimg, scale):

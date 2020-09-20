@@ -1,0 +1,10 @@
+Run openpose on webcam: "
+bin\OpenPoseDemo.exe  --write_keypoint_json C:\Users\JLR\Desktop\yoga-new-data\output
+
+"
+Run prediction and write output to file
+: "python predictSeq.py > export.txt
+
+Run"
+Pprediction and show output on cmd: "
+python predictSeq.py"

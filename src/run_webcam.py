@@ -4,10 +4,13 @@ import time
 
 import cv2
 import numpy as np
-
+import common
 from estimator import TfPoseEstimator
 from networks import get_graph_path, model_wh
 import json
+from lifting.prob_model import Prob3dPose
+from lifting.draw import plot_pose
+from matplotlib import pyplot as plt
 logger = logging.getLogger('TfPoseEstimator-WebCam')
 logger.setLevel(logging.DEBUG)
 ch = logging.StreamHandler()
@@ -87,8 +90,32 @@ if __name__ == '__main__':
                     (0, 0, 255), 3)
         cv2.imshow('orignal',image)
         cv2.imshow('tf-pose-estimation result', image2)
-        frame=frame+1
-        fps_time = time.time()
+        if n>0:
+            frame=frame+1
+
+        """logger.info('3d lifting initialization.')
+        poseLifting = Prob3dPose('../src/lifting/models/prob_model_params.mat')
+
+        image_h, image_w = image.shape[:2]
+        standard_w = 640
+        standard_h = 480
+
+        pose_2d_mpiis = []
+        visibilities = []
+        for human in humans:
+            pose_2d_mpii, visibility = common.MPIIPart.from_coco(human)
+            pose_2d_mpiis.append([(int(x * standard_w + 0.5), int(y * standard_h + 0.5)) for x, y in pose_2d_mpii])
+            visibilities.append(visibility)
+
+        pose_2d_mpiis = np.array(pose_2d_mpiis)
+        visibilities = np.array(visibilities)
+        transformed_pose2d, weights = poseLifting.transform_joints(pose_2d_mpiis, visibilities)
+        pose_3d = poseLifting.compute_3d(transformed_pose2d, weights)
+        print(pose_3d)
+        for i, single_3d in enumerate(pose_3d):
+            plot_pose(single_3d)
+        plt.show()
+        fps_time = time.time()"""
         if cv2.waitKey(1) == 27:
             break
         logger.debug('finished+')
